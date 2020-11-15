@@ -84,7 +84,7 @@ void printHbar(const float usage, const int width)
 
 void printVbar(const float usage, const int height)
 {
-    assert("WIP");
+    assert(!"WIP");
 
 
     assert((usage >= 0.f) && (usage <= 1.f));
@@ -129,7 +129,7 @@ void printVbar(const float usage, const int height)
     printf(CSI"m" CUF);
 }
 
-void probeCPU(const int nproc, int64_t clocks[][7])
+void probeCPU(const int nproc, uint64_t clocks[][7])
 {
     FILE *fp;
     if (NULL == (fp = fopen("/proc/stat", "r")))
@@ -141,7 +141,7 @@ void probeCPU(const int nproc, int64_t clocks[][7])
     int check = 0;
     for (int i = 0; i <= nproc; ++i)
     {
-        check += fscanf(fp, "%*[^ ] %ld %ld %ld %ld %ld %ld %ld%*[^\n]\n",
+        check += fscanf(fp, "%*[^ ] %lu %lu %lu %lu %lu %lu %lu%*[^\n]\n",
             clocks[i]+0, clocks[i]+1, clocks[i]+2, clocks[i]+3, clocks[i]+4, clocks[i]+5, clocks[i]+6);
     }
 
@@ -160,9 +160,9 @@ void probeCPU(const int nproc, int64_t clocks[][7])
 
 void printCPU(const int nproc, const float delay)
 {
-    static int64_t clocks[2][128][7];
-    static int64_t totals[7];
-    static int64_t idles[7];
+    static uint64_t clocks[2][128][7];
+    static uint64_t totals[7];
+    static uint64_t idles[7];
 
     probeCPU(nproc, clocks[0]);
     usleep(delay * 1e6f);
@@ -360,7 +360,8 @@ bool check_for_key(const char key)
 int main(const int argc, char * const argv[])
 {
     float interval;
-    if (argc == 1) {
+    if (argc == 1)
+    {
         interval = 1;
     }
     else if ((argc != 2) || (sscanf(argv[1], "%f", &interval) != 1))
