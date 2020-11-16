@@ -190,7 +190,7 @@ void printCPU(const int nproc, const float delay)
     printHbar(usage, nproc * BASE_WIDTH);
     printf(CSI"m" "%lc", L'▏');
     risk2style(usage);
-    printf("%4.1f%%\n    ", 100*usage);
+    printf("%4.1f%%  \n    ", 100*usage);
     // printf(CSI"m" " [");
     for (int i = 1; i <= nproc; ++i)
     {
@@ -279,13 +279,13 @@ void printRAM(const int nproc)
     printHbar(usage, nproc * BASE_WIDTH);
     printf(CSI"m" "%lc", L'▏');
     risk2style(usage);
-    printf("%4.1f%%  %.1f" CSI"m" "/%.1f", 100.f*MemUsed/MemTotal, MemUsed*0x1p-20f, MemTotal*0x1p-20f);
+    printf("%4.1f%%  %.1f" CSI"m" "/%.1fGi", 100.f*MemUsed/MemTotal, MemUsed*0x1p-20f, MemTotal*0x1p-20f);
     printf(CSI"2;90m" "  [%.1f = %.1f + %.1f(f) + %.1f(b) + %.1f(c)]", MemTotal*0x1p-20f, MemUsed*0x1p-20f, MemFree*0x1p-20f, Buffers*0x1p-20f, Cached*0x1p-20f);
-    const float swapMb = (SwapTotal - SwapFree) * 0x1p-10f;
-    if (swapMb > 100)
-    {
-        printf(CSI"0;1;5;91m" "\tSwap: %.0fMi", swapMb);
-    }
+    // const float swapMb = (SwapTotal - SwapFree) * 0x1p-10f;
+    // if (swapMb > 100)
+    // {
+    //     printf(CSI"0;1;5;91m" "\tSwap: %.0fMi", swapMb);
+    // }
     puts(CSI"m" "   ");
 }
 
@@ -388,7 +388,7 @@ int main(const int argc, char * const argv[])
         printRAM(nproc);
 
         printf(CSI"u"); // Restore cursor position
-        printf(CSI"B"); // Move cursor one line down
+        printf(CUD);    // Move cursor one line down
         printCPU(nproc, interval);
 
         fflush(stdin);
