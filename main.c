@@ -43,10 +43,10 @@ void risk2style(const float r)
 
 void printHbar(const float usage, const int width)
 {
-    assert((usage >= 0.f) && (usage <= 1.f));
+    const float usage_cropped = fmax(fmin(usage, 1), 0);
 
     const int total_subbars = width * 8;
-    const int quantized_usage = (int) roundf(usage * total_subbars);
+    const int quantized_usage = (int) roundf(usage_cropped * total_subbars);
     int i = 0;
 
     // printf("%lc", L'▕');
@@ -69,7 +69,7 @@ void printHbar(const float usage, const int width)
         printf("%lc", L'█');
     }
 
-    risk2style(usage);
+    risk2style(usage_cropped);
     printf("%lc", L"\0▏▎▍▌▋▊▉█"[quantized_usage & 0b111]);
     i += !!(quantized_usage & 0b111);
 
