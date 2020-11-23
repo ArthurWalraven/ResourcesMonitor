@@ -61,29 +61,28 @@ void printHbar(const float usage, const int width)
     // printf("%lc", L'▕');
     
     risk2style(0.49f);
-    for (; (i*8 < total_subbars/2) && (i < quantized_usage/8); ++i)
+    for (; (i < total_subbars/2) && (i < quantized_usage-8); i += 8)
     {
         printf("%lc", L'█');
     }
     
     risk2style(0.74f);
-    for (; (i*8 < total_subbars/2 + total_subbars/4) && (i < quantized_usage/8); ++i)
+    for (; (i < total_subbars/2 + total_subbars/4) && (i < quantized_usage-8); i += 8)
     {
         printf("%lc", L'█');
     }
     
     risk2style(0.99f);
-    for (; (i*8 < total_subbars) && (i < quantized_usage/8); ++i)
+    for (; (i < total_subbars) && (i < quantized_usage-8); i += 8)
     {
         printf("%lc", L'█');
     }
 
     risk2style(usage_cropped);
     printf("%lc", L"\0▏▎▍▌▋▊▉█"[quantized_usage & 0b111]);
-    i += !!(quantized_usage & 0b111);
+    i += 8 * !!(quantized_usage & 0b111);
 
-    printf(CSI"m");
-    for (; i*8 < total_subbars; ++i)
+    for (; i < total_subbars; i += 8)
     {
         printf("%lc", L' ');
     }
