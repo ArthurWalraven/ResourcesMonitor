@@ -182,7 +182,9 @@ void printCPU(const int nproc, const float delay)
 
     for (int i = 0; i <= nproc; ++i)
     {
-        idles[i] = clocks[1][i][3] - clocks[0][i][3];
+        idles[i] =
+            +clocks[1][i][3] - clocks[0][i][3]
+            +clocks[1][i][4] - clocks[0][i][4];
     }
 
     const float usage = 1.f - (float) idles[0]/totals[0];
