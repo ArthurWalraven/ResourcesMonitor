@@ -161,8 +161,8 @@ void probeCPU(const int nproc, uint64_t clocks[][7])
 void printCPU(const int nproc, const float delay)
 {
     static uint64_t clocks[2][128][7];
-    static uint64_t totals[7];
-    static uint64_t idles[7];
+    static uint64_t totals[128];
+    static uint64_t idles[128];
 
     probeCPU(nproc, clocks[0]);
     usleep(delay * 1e6f);
