@@ -21,6 +21,10 @@
 
 #define BASE_WIDTH  (1 << 2)
 
+#ifndef MAX_PROCS
+#define MAX_PROCS   128
+#endif
+
 
 struct termios original_terminal_attributes;
 
@@ -160,9 +164,9 @@ void probeCPU(const int nproc, uint64_t clocks[][7])
 
 void printCPU(const int nproc, const float delay)
 {
-    static uint64_t clocks[2][128][7];
-    static uint64_t totals[128];
-    static uint64_t idles[128];
+    static uint64_t clocks[2][MAX_PROCS][7];
+    static uint64_t totals[MAX_PROCS];
+    static uint64_t idles[MAX_PROCS];
 
     probeCPU(nproc, clocks[0]);
     usleep(delay * 1e6f);
@@ -374,6 +378,7 @@ int main(const int argc, char * const argv[])
 
     const int nproc = get_nprocs_conf();
     assert(nproc > 0);
+    assert(nproc <= MAX_PROCS);
 
     setlocale(LC_CTYPE, "");
 
