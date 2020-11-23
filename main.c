@@ -172,7 +172,7 @@ void printCPU(const int nproc, const float delay)
     static uint64_t totals[MAX_PROCS];
     static uint64_t idles[MAX_PROCS];
 
-    probeCPU(nproc, clocks[0]);
+    probeCPU(nproc, clocks[0]); // TODO: Not necessary
     usleep(delay * 1e6f);
     probeCPU(nproc, clocks[1]);
 
