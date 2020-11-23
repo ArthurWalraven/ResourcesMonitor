@@ -56,7 +56,6 @@ void printHbar(const float usage, const int width)
     if (!quantized_usage)
     {
         printf(CSI"m" "%lc", L'▏');
-        return;
     }
     // printf("%lc", L'▕');
     
