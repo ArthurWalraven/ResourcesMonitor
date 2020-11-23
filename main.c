@@ -50,7 +50,8 @@ void printHbar(const float usage, const int width)
     const float usage_cropped = fmax(fmin(usage, 1), 0);
 
     const int total_subbars = width * 8;
-    const int quantized_usage = (int) roundf(usage_cropped * total_subbars);
+    int quantized_usage = (int) roundf(usage_cropped * total_subbars);
+    quantized_usage += !(quantized_usage);
     int i = 0;
 
     // printf("%lc", L'▕');
